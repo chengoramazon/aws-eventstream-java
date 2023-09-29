@@ -19,7 +19,16 @@ The project mainly consists of three classes:
 Here is a simple usage example:
 
 ```java
-// code example goes here
+import software.amazon.eventstream.Message;
+import software.amazon.eventstream.HeaderValue;
+
+Map<String, HeaderValue> headers = new HashMap<>();
+headers.put("headerKey", HeaderValue.fromString("headerValue"));
+
+byte[] payload = "payload".getBytes(StandardCharsets.UTF_8);
+
+Message message = new Message(headers, payload);
+```
 ```
 
 ## Prerequisites
