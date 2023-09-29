@@ -16,18 +16,34 @@ The project mainly consists of three classes:
 
 ## Usage
 
-Here is a simple usage example:
+Here is a comprehensive usage example:
 
 ```java
-import software.amazon.eventstream.Message;
-import software.amazon.eventstream.HeaderValue;
+import software.amazon.eventstream.*;
 
+// Step 1: Create a Message object
 Map<String, HeaderValue> headers = new HashMap<>();
 headers.put("headerKey", HeaderValue.fromString("headerValue"));
-
 byte[] payload = "payload".getBytes(StandardCharsets.UTF_8);
-
 Message message = new Message(headers, payload);
+
+// Step 2: Encode the Message to a ByteBuffer
+ByteBuffer encodedMessage = message.toByteBuffer();
+
+// Step 3: Create a MessageDecoder object
+MessageDecoder decoder = new MessageDecoder();
+
+// Step 4: Feed the encoded message to the decoder
+decoder.feed(encodedMessage.array());
+
+// Step 5: Retrieve the decoded messages
+List<Message> decodedMessages = decoder.getDecodedMessages();
+
+// Step 6: Handle the prelude section of the Message
+// The prelude section is handled internally by the Message and MessageDecoder classes.
+// You can access the total length and headers length of the message through the Message object.
+int totalLength = decodedMessages.get(0).getTotalLength();
+long headersLength = decodedMessages.get(0).getHeadersLength();
 ```
 ```
 
